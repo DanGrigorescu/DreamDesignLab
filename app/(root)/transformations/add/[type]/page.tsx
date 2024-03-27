@@ -1,7 +1,7 @@
 import React from "react";
 
 const AddTransformationTypePage = () => {
-  return <div>AddTransformationTypePage</div>;
+  return <div hidden>AddTransformationTypePage</div>;
 };
 
 export default AddTransformationTypePage;
