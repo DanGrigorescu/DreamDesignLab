@@ -3,9 +3,8 @@ import React from "react";
 
 const Home = () => {
   return (
-    <div hidden>
-      <p hidden>Home</p>
-      <UserButton afterSignOutUrl="/" />
+    <div>
+      <p>Home</p>
     </div>
   );
 };

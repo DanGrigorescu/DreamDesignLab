@@ -3,7 +3,7 @@ import React from "react";
 const CreditPage = () => {
   return (
     <div>
-      <p hidden>CreditPage</p>
+      <p>CreditPage</p>
     </div>
   );
 };
