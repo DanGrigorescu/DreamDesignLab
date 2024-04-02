@@ -8,15 +8,13 @@ interface MongooseConnection {
 }
 
 let cached: MongooseConnection = (global as any).mongoose;
+
 if (!cached) {
   cached = (global as any).mongoose = {
     conn: null,
     promise: null,
   };
 }
-
-//Incercam prima data sa vedem daca exista conexiune cu DB, daca nu este se incearca o noua conectare
-//Din cauza next.js unde se conecteaza la DB la fiecare request(nu mentine conexiune, fiecare request este procesat independent)
 
 export const connectToDatabase = async () => {
   if (cached.conn) return cached.conn;
@@ -25,7 +23,10 @@ export const connectToDatabase = async () => {
 
   cached.promise =
     cached.promise ||
-    mongoose.connect(MONGODB_URL, { dbName: "dream", bufferCommands: false });
+    mongoose.connect(MONGODB_URL, {
+      dbName: "imaginify",
+      bufferCommands: false,
+    });
 
   cached.conn = await cached.promise;
 
