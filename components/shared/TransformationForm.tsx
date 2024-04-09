@@ -33,6 +33,7 @@ import { Value } from "@radix-ui/react-select";
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
 import { updateCredits } from "@/lib/actions/user.actions";
 import MediaUploader from "./MediaUploader";
+import { Image } from "lucide-react";
 
 export const formSchema = z.object({
   title: z.string(),
@@ -222,6 +223,7 @@ const TransformationForm = ({
             render={({ field }) => (
               <MediaUploader
                 onValueChange={field.onChange}
+                image={image}
                 setImage={setImage}
                 publicId={field.value}
                 type={type}
