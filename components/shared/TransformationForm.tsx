@@ -24,6 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import {
   aspectRatioOptions,
+  creditFee,
   defaultValues,
   transformationTypes,
 } from "@/constants";
@@ -34,6 +35,7 @@ import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
 import { updateCredits } from "@/lib/actions/user.actions";
 import MediaUploader from "./MediaUploader";
 import { Image } from "lucide-react";
+import TransformedImage from "./TransformedImage";
 
 export const formSchema = z.object({
   title: z.string(),
@@ -126,7 +128,9 @@ const TransformationForm = ({
 
     setNewTransformation(null);
 
-    startTransition(async () => {});
+    startTransition(async () => {
+      await updateCredits(userId, -1);
+    });
   };
 
   return (
@@ -229,6 +233,14 @@ const TransformationForm = ({
                 type={type}
               />
             )}
+          />
+          <TransformedImage
+            image={image}
+            type={type}
+            title={form.getValues().title}
+            isTransforming={isTransforming}
+            setIsTransforming={setIsTransforming}
+            transformationConfig={transformationConfig}
           />
         </div>
 
