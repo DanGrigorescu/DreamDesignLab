@@ -14,7 +14,7 @@ const populateUser = (query: any) =>
   query.populate({
     path: "author",
     model: User,
-    select: "_id firsName lastName",
+    select: "_id firsName lastName clerkId",
   });
 
 export async function addImage({ image, userId, path }: AddImageParams) {
