@@ -1,4 +1,4 @@
-"use";
+"use client";
 
 import { dataUrl, debounce, download, getImageSize } from "@/lib/utils";
 import { set } from "mongoose";
