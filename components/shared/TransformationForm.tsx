@@ -1,8 +1,17 @@
 "use client";
 
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,14 +22,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 import { Input } from "@/components/ui/input";
 import {
   aspectRatioOptions,
@@ -30,12 +31,10 @@ import {
 } from "@/constants";
 import { CustomField } from "./CustomField";
 import { useEffect, useState, useTransition } from "react";
-import { Value } from "@radix-ui/react-select";
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
-import { updateCredits } from "@/lib/actions/user.actions";
 import MediaUploader from "./MediaUploader";
-import { Image } from "lucide-react";
 import TransformedImage from "./TransformedImage";
+import { updateCredits } from "@/lib/actions/user.actions";
 import { getCldImageUrl } from "next-cloudinary";
 import { addImage, updateImage } from "@/lib/actions/image.actions";
 import { useRouter } from "next/navigation";
@@ -156,13 +155,16 @@ const TransformationForm = ({
     onChangeField: (value: string) => void
   ) => {
     const imageSize = aspectRatioOptions[value as AspectRatioKey];
+
     setImage((prevState: any) => ({
       ...prevState,
       aspectRatio: imageSize.aspectRatio,
       width: imageSize.width,
       height: imageSize.height,
     }));
+
     setNewTransformation(transformationType.config);
+
     return onChangeField(value);
   };
 
@@ -177,11 +179,12 @@ const TransformationForm = ({
         ...prevState,
         [type]: {
           ...prevState?.[type],
-          [fieldName === "promt" ? "promt" : "to"]: value,
+          [fieldName === "prompt" ? "prompt" : "to"]: value,
         },
       }));
-      return onChangeField(value);
-    }, 1000);
+    }, 1000)();
+
+    return onChangeField(value);
   };
 
   const onTransformHandler = async () => {
@@ -215,6 +218,7 @@ const TransformationForm = ({
           className="w-full"
           render={({ field }) => <Input {...field} className="input-field" />}
         />
+
         {type === "fill" && (
           <CustomField
             control={form.control}
@@ -267,6 +271,7 @@ const TransformationForm = ({
                 />
               )}
             />
+
             {type === "recolor" && (
               <CustomField
                 control={form.control}
@@ -300,13 +305,14 @@ const TransformationForm = ({
             render={({ field }) => (
               <MediaUploader
                 onValueChange={field.onChange}
-                image={image}
                 setImage={setImage}
                 publicId={field.value}
+                image={image}
                 type={type}
               />
             )}
           />
+
           <TransformedImage
             image={image}
             type={type}
@@ -324,9 +330,8 @@ const TransformationForm = ({
             disabled={isTransforming || newTransformation === null}
             onClick={onTransformHandler}
           >
-            {isTransforming ? "Transforming..." : "Apply transformation"}
+            {isTransforming ? "Transforming..." : "Apply Transformation"}
           </Button>
-
           <Button
             type="submit"
             className="submit-button capitalize"
