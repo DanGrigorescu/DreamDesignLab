@@ -1,7 +1,6 @@
 "use client";
 
 import { dataUrl, debounce, download, getImageSize } from "@/lib/utils";
-import { set } from "mongoose";
 import { CldImage, getCldImageUrl } from "next-cloudinary";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
@@ -14,24 +13,24 @@ const TransformedImage = ({
   transformationConfig,
   isTransforming,
   setIsTransforming,
-  hasDownload = true,
+  hasDownload = false,
 }: TransformedImageProps) => {
-  const downloadHandler = () => {
-    const downloadHandler = (
-      e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    ) => {
-      e.preventDefault();
-      download(
-        getCldImageUrl({
-          width: image?.width,
-          height: image?.height,
-          src: image?.publicId,
-          ...transformationConfig,
-        }),
-        title
-      );
-    };
+  const downloadHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+
+    download(
+      getCldImageUrl({
+        width: image?.width,
+        height: image?.height,
+        src: image?.publicId,
+        ...transformationConfig,
+      }),
+      title
+    );
   };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex-between">
@@ -41,7 +40,7 @@ const TransformedImage = ({
           <button className="download-btn" onClick={downloadHandler}>
             <Image
               src="/assets/icons/download.svg"
-              alt="download"
+              alt="Download"
               width={24}
               height={24}
               className="pb-[6px]"
@@ -70,15 +69,16 @@ const TransformedImage = ({
             }}
             {...transformationConfig}
           />
+
           {isTransforming && (
             <div className="transforming-loader">
               <Image
                 src="/assets/icons/spinner.svg"
                 width={50}
                 height={50}
-                alt="Transforming"
+                alt="spinner"
               />
-              <p className="text-white/80">Please wait</p>
+              <p className="text-white/80">Please wait...</p>
             </div>
           )}
         </div>
